@@ -1,4 +1,4 @@
-FROM vistek/ubu-openresty-pagespeed:1.0
+FROM vsalomaki/ubuntu-docker-openresty-pagespeed:latest
 
 MAINTAINER Ville Salom�ki - Vistek <vsalomaki@gmail.com>
 #Forked from files by Ville Pietarinen / Geniem Oy
