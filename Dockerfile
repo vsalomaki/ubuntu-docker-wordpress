@@ -43,7 +43,7 @@ RUN \
         php7.4-xml \
         php7.4-zip \
         php7.4-fpm \
-        #php7.4-redis \
+        php7.4-redis \
         php7.4-mongodb \
         php7.4-mysqli \
         php7.4-intl \
@@ -54,7 +54,7 @@ RUN \
         php7.4-curl \
         php7.4-ldap \
         php-pear \
-    && pecl install redis \
+    #&& pecl install redis \
     # Force install only cron without extra mailing dependencies
     && cd /tmp \
     && apt-get download cron \
