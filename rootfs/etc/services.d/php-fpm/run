@@ -23,7 +23,7 @@ if [ -z "$PHP_SESSION_SAVE_PATH" ]; then
         REDIS_HOST=${REDIS_HOST-$REDIS_1_PORT_6379_TCP_ADDR}
         REDIS_PORT=${REDIS_PORT-6379}
         REDIS_SCHEME=${REDIS_SCHEME-tcp}
-        REDIS_PHP_SESSION_HOST=${REDIS_PHP_SESSION_HOST-$REDIS_1_PORT_6379_TCP_ADDR}
+        REDIS_PHP_SESSION_HOST=${REDIS_HOST-$REDIS_1_PORT_6379_TCP_ADDR}
 
         # After this time php-fpm will timeout from requesting session data
         PHP_SESSION_REDIS_TIMEOUT=${PHP_SESSION_REDIS_TIMEOUT-5}
@@ -50,4 +50,3 @@ echo "[php-fpm] using $PHP_SESSION_SAVE_PATH for php sessions..."
 
 echo "[php-fpm] started php-fpm"
 exec php-fpm -c /etc/php/7.4/fpm/php.ini --fpm-config /etc/php/7.4/fpm/php-fpm.conf --pid /var/run/php-fpm.pid
-
