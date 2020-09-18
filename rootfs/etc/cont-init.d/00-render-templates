@@ -30,6 +30,7 @@ echo "[cont-init.d] Substituting env into configuration files..."
 # Nginx doesn't support env variables in config files so we will have to do this in hacky way instead
 ##
 VARS='$PORT:$WEB_ROOT:$WEB_USER:$WEB_GROUP:$NGINX_ACCESS_LOG:$NGINX_ERROR_LOG:$NGINX_ERROR_LEVEL:$NGINX_INCLUDE_DIR:$NGINX_MAX_BODY_SIZE:$NGINX_BODY_BUFFER_SIZE:$NGINX_FASTCGI_TIMEOUT:$WP_ENV:$NGINX_CACHE_KEY'
+VARS+='$SERVER_NAME'
 render_env_tmpl "$VARS" /etc/nginx/nginx.conf
 
 ##
@@ -45,7 +46,7 @@ export REDIS_CACHE_TTL=${REDIS_CACHE_TTL-14400}
 export REDIS_READHOST=${REDIS_READHOST-$REDIS_HOST}
 
 # Add helper variables for AWS s3 bucket storage
-VARS+='$AWS_S3_BUCKET_NAME:AWS_S3_REPLICA_BUCKET_NAME'
+VARS+='$AWS_S3_BUCKET_NAME:$AWS_S3_REPLICA_BUCKET_NAME'
 
 # Add Redis variables
 VARS+='$REDIS_HOST:$REDIS_READHOST:$REDIS_PORT:$REDIS_DATABASE:$REDIS_PASSWORD:$NGINX_REDIS_CACHE_TTL_MAX:$NGINX_REDIS_CACHE_TTL_DEFAULT:$NGINX_REDIS_CACHE_PREFIX'
