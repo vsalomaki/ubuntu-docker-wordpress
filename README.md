@@ -1,11 +1,13 @@
 # Lightweight PHP-FPM & Nginx Docker Image for WordPress
+Forked from:
+
 [![devgeniem/alpine-wordpress docker image](http://dockeri.co/image/devgeniem/wordpress-server)](https://registry.hub.docker.com/u/devgeniem/wordpress-server/)
 
 [![License](https://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
-This is maintained repository. We use this project in production and recommend this for your projects too. This container doesn't have mysql or email, you need to provide them from elsewhere. This can be other container or your host machine.
+This container doesn't have mysql or email, you need to provide them from elsewhere. This can be other container or your host machine.
 
-I tried to include all build, test and project tools in [docker-alpine-wordpress](https://github.com/devgeniem/docker-alpine-wordpress) image. I think that more modular design is better for docker and security as well.
+This includes most build, test and project tools in [docker-alpine-wordpress](https://github.com/devgeniem/docker-alpine-wordpress) image.
 
 This project tries to be as minimal as possible and doesn't include anything that we don't absolutely need in the runtime.
 
@@ -46,11 +48,11 @@ You can have custom nginx includes in your project mount `/var/www/project/nginx
 
 **Include into server {} block:**
 `/var/www/project/nginx/server/*.conf`
+Note: All location-directives need to be brought via include. For example in server/locations.conf. See sample_locations.conf
 
 **Include into @index {} block:**
 `/var/www/project/nginx/index/*.conf`
 
-See more in our [wp-project template](https://github.com/devgeniem/wp-project).
 
 ## Cron jobs
 You can place cron file in `/var/www/project/tasks.cron`. This is symlinked to crond and run as user `wordpress`.
@@ -86,6 +88,19 @@ DB_PORT     # Default: ''
 ```
 
 Remember to set `DB_NAME`, `DB_PASSWORD` and `DB_USER` and use these variables in your wp-config.php. These are automatically added as envs in php context.
+
+
+### Redis
+```
+REDIS_HOST			#Note: Does not fully support cluster-mode. The WP Object cache would support cluster, but nginx redis-lua does not.
+REDIS_READHOST		#Only utilizes readhost in nginx pagecaching and not wordpress object cache. Defaults to REDIS_HOST
+REDIS_PASSWORD
+REDIS_PORT	
+REDIS_SCHEME			#Example: tcp
+REDIS_DATABASE
+REDIS_MAXTTL_WP_OBCACHE 
+REDIS_DISABLED	#Use to 1 disable
+```
 
 ### Email variables
 
@@ -156,7 +171,7 @@ CACHE_MODE=
 
 ## What's inside container:
 ### For running WordPress
-- php7.xx
+- php7.4
 - php-fpm7
 - nginx
 - wp-cli
