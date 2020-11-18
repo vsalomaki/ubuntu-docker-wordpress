@@ -131,8 +131,8 @@ ENV \
     # This variable uses seconds by default
     # Time units supported are "s"(seconds), "ms"(milliseconds), "y"(years), "M"(months), "w"(weeks), "d"(days), "h"(hours), and "m"(minutes).
     # Also http response codes that are cached can be set
-    NGINX_REDIS_CACHE_TTL_DEFAULT="200 301 302 1m" \
-    NGINX_REDIS_CACHE_TTL_MAX="4h" \
+    NGINX_REDIS_CACHE_TTL_DEFAULT="60" \
+    NGINX_REDIS_CACHE_TTL_MAX="60" \
     # Default fastcgi cache directory
     NGINX_CACHE_DIRECTORY="/dev/cache" \
     # Default operations when fastcgi stale cache is used
@@ -160,7 +160,7 @@ ENV \
     # Have sane fastcgi timeout by default
     NGINX_ACCESS_LOG="/dev/stdout" \
     # Default cache key for nginx http cache
-    NGINX_CACHE_KEY='wp_:nginx:$real_scheme$request_method$host$request_uri' \
+    NGINX_CACHE_KEY='wp:nginx:' \
     # PHP settings
     PHP_MEMORY_LIMIT="128M" \
     PHP_MAX_INPUT_VARS="1000" \
