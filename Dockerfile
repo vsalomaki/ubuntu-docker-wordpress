@@ -65,6 +65,8 @@ RUN \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* /var/log/apt/* /var/log/*.log
 
+#Disable ipv6
+RUN cat /etc/disable_ipv6 >> /etc/sysctl.conf
 
 # Install helpers
 RUN \
