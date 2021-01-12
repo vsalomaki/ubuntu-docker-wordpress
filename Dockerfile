@@ -65,9 +65,6 @@ RUN \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* /var/log/apt/* /var/log/*.log
 
-#Disable ipv6
-RUN cat /etc/disable_ipv6 >> /etc/sysctl.conf
-
 # Install helpers
 RUN \
     ##
@@ -100,13 +97,15 @@ RUN \
 ##
 COPY rootfs/ /
 
+
 # Run small fixes
 RUN set -x \
     && mkdir -p /var/www/uploads \
     && mkdir -p /dev/cache \
     && mkdir -p /tmp/php-opcache \
     && ln -sf /usr/sbin/php-fpm7.4 /usr/sbin/php-fpm \
-    && ln -sf /usr/bin/wp /usr/local/bin/wp
+    && ln -sf /usr/bin/wp /usr/local/bin/wp \
+    && cat /etc/disable_ipv6 >> /etc/sysctl.conf 
 # This is for your project root
 ENV PROJECT_ROOT="/var/www/project"
 
