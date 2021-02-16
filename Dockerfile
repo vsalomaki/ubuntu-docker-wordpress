@@ -1,6 +1,6 @@
 FROM vsalomaki/ubuntu-docker-openresty-pagespeed:latest
 
-MAINTAINER Ville Salom�ki - Vistek <vsalomaki@gmail.com>
+LABEL maintainer="vsalomaki@gmail.com"
 #Forked from files by Ville Pietarinen / Geniem Oy
 
 ##
@@ -71,8 +71,6 @@ RUN \
     # Install composer
     ##
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && composer global require hirak/prestissimo \
-
     ##
     # Install wp-cli
     # source: http://wp-cli.org/
@@ -81,7 +79,6 @@ RUN \
     && chmod +rx /usr/local/bin/wp-cli \
     # Symlink it to /usr/bin as well so that cron can find this script with limited PATH
     && ln -s /usr/local/bin/wp-cli /usr/bin/wp-cli \
-
     ##
     # Install cronlock for running cron correctly with multi container setups
     # https://github.com/kvz/cronlock
