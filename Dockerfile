@@ -14,10 +14,11 @@ ARG DEBIAN_FRONTEND=noninteractive
 # - Dotdeb is an extra repository providing up-to-date packages for your Debian servers
 ##
 RUN \
-    apt-get update \
-&& apt-get -y --no-install-recommends install software-properties-common \
+    apt update \
+    && apt -y upgrade && apt -y autoremove \
+    && apt -y --no-install-recommends install software-properties-common \
     && add-apt-repository ppa:ondrej/php \
-    && apt-get -y --no-install-recommends install \
+    && apt -y --no-install-recommends install \
         apt-utils \
         curl \
         nano \
@@ -29,8 +30,8 @@ RUN \
         netcat \
         less \
         build-essential \
-    && apt-get update \
-    && apt-get -y install \
+    && apt update \
+    && apt -y install \
         php7.4-dev \
         php7.4-cli \
         php7.4-common \
