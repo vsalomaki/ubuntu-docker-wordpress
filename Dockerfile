@@ -1,4 +1,4 @@
-FROM vsalomaki/ubuntu-docker-openresty-pagespeed:latest
+FROM vsalomaki/ubuntu-docker-openresty-pagespeed:18.04.01
 
 LABEL maintainer="vsalomaki@gmail.com"
 #Forked from files by Ville Pietarinen / Geniem Oy
@@ -12,27 +12,23 @@ ARG DEBIAN_FRONTEND=noninteractive
 ##
 # Install php7 packages from dotdeb.org
 # - Dotdeb is an extra repository providing up-to-date packages for your Debian servers
-##
+## 
 RUN \
     apt update \
-    && apt -y upgrade && apt -y autoremove \
-    && apt -y --no-install-recommends install software-properties-common \
-    && add-apt-repository ppa:ondrej/php \
-    && apt -y --no-install-recommends install \
-        apt-utils \
-        curl \
-        nano \
-        ca-certificates \
-        git \
-        mysql-client \
-        msmtp \
-        postfix \
-        netcat \
-        less \
-        build-essential \
-    && apt update \
-    && apt -y install \
-        php7.4-dev \
+     && apt -y upgrade \
+     && apt -y --no-install-recommends install software-properties-common \
+     && add-apt-repository ppa:ondrej/php \
+     && apt -y --no-install-recommends install \
+         apt-utils \
+         curl \
+         nano \
+         ca-certificates \
+         msmtp \
+         postfix \
+         less 
+RUN \
+        apt -y install \
+        #php7.4-dev \
         php7.4-cli \
         php7.4-common \
         php7.4-apcu \
@@ -52,19 +48,15 @@ RUN \
         php7.4-mbstring \
         php7.4-soap \
         php7.4-bcmath \
-        php7.4-curl \
-        php7.4-ldap \
+        #php7.4-ldap \
         php-pear \
     #&& pecl install redis \
     # Force install only cron without extra mailing dependencies
     && cd /tmp \
-    && apt-get download cron \
+    && apt download cron \
     && dpkg --force-all -i cron*.deb \
-    && mkdir -p /var/spool/cron/crontabs \
-    # Cleanup
-    && apt-get clean \
-    && apt-get autoremove \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* /var/log/apt/* /var/log/*.log
+    && mkdir -p /var/spool/cron/crontabs 
+
 
 # Install helpers
 RUN \
@@ -89,12 +81,17 @@ RUN \
     # Symlink it to /usr/bin as well so that cron can find this script with limited PATH
     && ln -s /usr/local/bin/cronlock /usr/bin/cronlock
 
+# Cleanup
+RUN \
+    apt clean \
+    && apt autoremove \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* /var/log/apt/* /var/log/*.log
+
 ##
 # Add Project files like nginx and php-fpm processes and configs
 # Also custom scripts and bashrc
 ##
 COPY rootfs/ /
-
 
 # Run small fixes
 RUN set -x \
@@ -104,8 +101,10 @@ RUN set -x \
     && ln -sf /usr/sbin/php-fpm7.4 /usr/sbin/php-fpm \
     && ln -sf /usr/bin/wp /usr/local/bin/wp \
     && cat /etc/disable_ipv6 >> /etc/sysctl.conf 
+    
 # This is for your project root
 ENV PROJECT_ROOT="/var/www/project"
+COPY nginx ${PROJECT_ROOT}/nginx
 
 ENV \
     # Add interactive term
@@ -184,6 +183,8 @@ ENV \
     # Make sure that all files here have execute permissions
 RUN dpkg-reconfigure tzdata && \
     chmod +x /etc/cont-init.d/*
+
+
 # Set default path to project folder for easier running commands in project
 WORKDIR ${PROJECT_ROOT}
 EXPOSE ${PORT}
