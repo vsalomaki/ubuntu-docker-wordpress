@@ -99,8 +99,7 @@ RUN set -x \
     && mkdir -p /dev/cache \
     && mkdir -p /tmp/php-opcache \
     && ln -sf /usr/sbin/php-fpm7.4 /usr/sbin/php-fpm \
-    && ln -sf /usr/bin/wp /usr/local/bin/wp \
-    && cat /etc/disable_ipv6 >> /etc/sysctl.conf 
+    && ln -sf /usr/bin/wp /usr/local/bin/wp 
     
 # This is for your project root
 ENV PROJECT_ROOT="/var/www/project"
