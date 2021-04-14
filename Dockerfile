@@ -179,8 +179,8 @@ ENV \
     # You should use this path for your uploads since everything else should be ephemeral
     UPLOADS_ROOT="/var/www/uploads" \
     # This can be overidden by you, it's just default for us
-    TZ="Europe/Helsinki" \
-    PROXY="127.0.0.1" 
+    TZ="Europe/Helsinki" 
+    #PROXY="127.0.0.1" 
 
 # Setup $TZ. Remember to run this again in your own build
     # Make sure that all files here have execute permissions
