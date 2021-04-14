@@ -77,6 +77,19 @@ for conf_file in $(find $NGINX_INCLUDE_DIR -type f  -name '*.tmpl'); do
 done
 
 # Encrypt basic auth password if it set
+if [[ -z "${PROXY}" ]];
+then
+    echo "Not using PROXY for container.."
+else
+    echo "Using ${PROXY} as proxy for http_proxy.."
+    export http_proxy=${PROXY}
+    export HTTP_PROXY=${PROXY}
+
+    export https_proxy=${PROXY}
+    export HTTPS_PROXY=${PROXY}
+fi
+
+# Encrypt basic auth password if it set
 if [[ -z "${BASIC_AUTH_PASSWORD}" ]];
 then
     echo "Not encrypting BASIC_AUTH_PASSWORD..."
