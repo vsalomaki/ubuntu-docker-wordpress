@@ -82,12 +82,12 @@ if [[ -z "${PROXY}" ]];
 then
     echo "Not using PROXY for container.."
 else
-    echo "Using ${PROXY} as proxy for http_proxy.."
-    export http_proxy=${PROXY}
-    export HTTP_PROXY=${PROXY}
+    echo "Using ${PROXY} for http_proxy.."
+    echo http_proxy=${PROXY} >> /etc/environment
+    echo HTTP_PROXY=${PROXY} >> /etc/environment
 
-    export https_proxy=${PROXY}
-    export HTTPS_PROXY=${PROXY}
+    echo https_proxy=${PROXY} >> /etc/environment
+    echo HTTPS_PROXY=${PROXY} >> /etc/environment
 fi
 
 # Encrypt basic auth password if it set
