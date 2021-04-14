@@ -77,17 +77,16 @@ for conf_file in $(find $NGINX_INCLUDE_DIR -type f  -name '*.tmpl'); do
     render_env_tmpl "$VARS_TMPL" $conf_file
 done
 
-# Encrypt basic auth password if it set
+# Set proxy variables
 if [[ -z "${PROXY}" ]];
 then
     echo "Not using PROXY for container.."
 else
     echo "Using ${PROXY} for http_proxy.."
-    echo http_proxy=${PROXY} >> /etc/environment
-    echo HTTP_PROXY=${PROXY} >> /etc/environment
-
-    echo https_proxy=${PROXY} >> /etc/environment
-    echo HTTPS_PROXY=${PROXY} >> /etc/environment
+    echo http_proxy="${PROXY}" >> /etc/environment
+    echo HTTP_PROXY="${PROXY}" >> /etc/environment
+    echo https_proxy="${PROXY}" >> /etc/environment
+    echo HTTPS_PROXY="${PROXY}" >> /etc/environment
 fi
 
 # Encrypt basic auth password if it set

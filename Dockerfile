@@ -9,6 +9,8 @@ LABEL maintainer="vsalomaki@gmail.com"
 ARG LANG=C.UTF-8
 ARG DEBIAN_FRONTEND=noninteractive
 
+RUN echo "cachebust-1"
+
 ##
 # Install php7 packages from dotdeb.org
 # - Dotdeb is an extra repository providing up-to-date packages for your Debian servers
@@ -177,7 +179,9 @@ ENV \
     # You should use this path for your uploads since everything else should be ephemeral
     UPLOADS_ROOT="/var/www/uploads" \
     # This can be overidden by you, it's just default for us
-    TZ="Europe/Helsinki"
+    TZ="Europe/Helsinki" \
+    PROXY="127.0.0.1" 
+
 # Setup $TZ. Remember to run this again in your own build
     # Make sure that all files here have execute permissions
 RUN dpkg-reconfigure tzdata && \
