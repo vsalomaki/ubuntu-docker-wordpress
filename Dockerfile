@@ -1,4 +1,4 @@
-FROM vsalomaki/ubuntu-docker-openresty-pagespeed:18.04.02
+FROM vsalomaki/ubuntu-docker-openresty-pagespeed:18.04.03
 
 LABEL maintainer="vsalomaki@gmail.com"
 #Forked from files by Ville Pietarinen / Geniem Oy
