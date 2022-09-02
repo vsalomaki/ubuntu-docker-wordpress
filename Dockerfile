@@ -25,7 +25,7 @@ RUN apt install -y software-properties-common \
          ca-certificates \
          msmtp \
          postfix \
-         less envsubst
+         less gettext
 
 RUN add-apt-repository ppa:ondrej/php 
 RUN \
