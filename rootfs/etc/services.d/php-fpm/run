@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/command/with-contenv bash
 
 ##
 # Check which kind of session backend we should be using
@@ -49,4 +49,4 @@ fi
 echo "[php-fpm] using $PHP_SESSION_SAVE_PATH for php sessions..."
 
 echo "[php-fpm] started php-fpm"
-exec php-fpm -c /etc/php/7.4/fpm/php.ini --fpm-config /etc/php/7.4/fpm/php-fpm.conf --pid /var/run/php-fpm.pid
+php-fpm -c /etc/php/7.4/fpm/php.ini --fpm-config /etc/php/7.4/fpm/php-fpm.conf --pid /var/run/php-fpm.pid

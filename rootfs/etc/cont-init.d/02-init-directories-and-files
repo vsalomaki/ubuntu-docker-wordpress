@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/command/with-contenv bash
 
 # Create uploads directory if not exists
 mkdir -p $UPLOADS_ROOT

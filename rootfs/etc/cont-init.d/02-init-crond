@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/command/with-contenv bash
 
 # Copy cronjob from project and run as nginx
 if [ -f $PROJECT_ROOT/tasks.cron ]; then

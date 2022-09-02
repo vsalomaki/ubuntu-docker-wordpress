@@ -1,4 +1,4 @@
-FROM vsalomaki/ubuntu-docker-openresty-pagespeed:18.04.06
+FROM vsalomaki/ubuntu-docker-openresty-pagespeed:22.04.01
 
 LABEL maintainer="vsalomaki@gmail.com"
 #Forked from files by Ville Pietarinen / Geniem Oy
@@ -15,21 +15,21 @@ RUN echo "cachebust-2"
 # Install php7 packages from dotdeb.org
 # - Dotdeb is an extra repository providing up-to-date packages for your Debian servers
 ## 
-RUN \
-    apt update \
-     && apt -y upgrade \
-     && apt -y --no-install-recommends install software-properties-common \
-     && add-apt-repository ppa:ondrej/php \
-     && apt -y --no-install-recommends install \
+RUN apt update && apt upgrade -y  
+
+RUN apt install -y software-properties-common \
+     && apt install -y --no-install-recommends \
          apt-utils \
          curl \
          nano \
          ca-certificates \
          msmtp \
          postfix \
-         less 
+         less envsubst
+
+RUN add-apt-repository ppa:ondrej/php 
 RUN \
-        apt -y install \
+        apt install -y \
         #php7.4-dev \
         php7.4-cli \
         php7.4-common \
@@ -70,7 +70,8 @@ RUN \
     # Install wp-cli
     # source: http://wp-cli.org/
     ##
-    && curl -L https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp-cli \
+    && curl -o /usr/local/bin/wp-cli -L https://github.com/wp-cli/wp-cli/releases/download/v2.6.0/wp-cli-2.6.0.phar  \
+    && echo "d166528cab60bc8229c06729e7073838fbba68d6b2b574504cb0278835c87888 /usr/local/bin/wp-cli" | sha256sum -c \
     && chmod +rx /usr/local/bin/wp-cli \
     # Symlink it to /usr/bin as well so that cron can find this script with limited PATH
     && ln -s /usr/local/bin/wp-cli /usr/bin/wp-cli \
@@ -78,7 +79,8 @@ RUN \
     # Install cronlock for running cron correctly with multi container setups
     # https://github.com/kvz/cronlock
     ##
-    && curl -L https://raw.githubusercontent.com/kvz/cronlock/master/cronlock -o /usr/local/bin/cronlock \
+    && curl -o /usr/local/bin/cronlock -L https://raw.githubusercontent.com/kvz/cronlock/master/cronlock  \
+    && echo "f7ffa617134e597be1b975541eb8300cdaf28c6c7e8f59d631df4f7c6d31ba74 /usr/local/bin/cronlock" | sha256sum -c \
     && chmod +rx /usr/local/bin/cronlock \
     # Symlink it to /usr/bin as well so that cron can find this script with limited PATH
     && ln -s /usr/local/bin/cronlock /usr/bin/cronlock
@@ -94,7 +96,9 @@ RUN \
 # Also custom scripts and bashrc
 ##
 COPY rootfs/ /
-
+RUN chmod -R a+r /etc/cont-init.d /etc/nginx && chmod -R a+rx /etc/services.d
+RUN ls -la /etc/services.d/cron
+RUN ls -la /usr/bin
 # Run small fixes
 RUN set -x \
     && mkdir -p /var/www/uploads \

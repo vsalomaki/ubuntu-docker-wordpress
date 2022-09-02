@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/command/with-contenv bash
 
 ##
 # If $WEB_USER user and web group already exists just skip the user creation
