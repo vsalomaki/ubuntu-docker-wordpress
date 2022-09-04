@@ -96,7 +96,7 @@ RUN \
 # Also custom scripts and bashrc
 ##
 COPY rootfs/ /
-RUN chmod -R a+r /etc/cont-init.d /etc/nginx && chmod -R a+rx /etc/services.d
+RUN chmod -R a+r /etc/cont-init.d /etc/nginx && chmod -R a+rx /etc/services.d && chmod +x /etc/cont-init.d/*
 
 # Run small fixes
 RUN set -x \
