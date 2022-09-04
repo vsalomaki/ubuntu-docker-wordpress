@@ -72,9 +72,9 @@ RUN \
     ##
     && curl -o /usr/local/bin/wp-cli -L https://github.com/wp-cli/wp-cli/releases/download/v2.6.0/wp-cli-2.6.0.phar  \
     && echo "d166528cab60bc8229c06729e7073838fbba68d6b2b574504cb0278835c87888 /usr/local/bin/wp-cli" | sha256sum -c \
-    && chmod a+rx /usr/local/bin/wp-cli \
     # Symlink it to /usr/bin as well so that cron can find this script with limited PATH
     && ln -s /usr/local/bin/wp-cli /usr/bin/wp-cli \
+    && chmod a+rx /usr/local/bin/wp-cli \
     ##
     # Install cronlock for running cron correctly with multi container setups
     # https://github.com/kvz/cronlock
@@ -104,7 +104,8 @@ RUN set -x \
     && mkdir -p /dev/cache \
     && mkdir -p /tmp/php-opcache \
     && ln -sf /usr/sbin/php-fpm7.4 /usr/sbin/php-fpm \
-    && ln -sf /usr/bin/wp /usr/local/bin/wp 
+    && ln -sf /usr/bin/wp /usr/local/bin/wp \
+    && chmod a+rx /usr/local/bin/wp
     
 # This is for your project root
 ENV PROJECT_ROOT="/var/www/project"
@@ -187,9 +188,7 @@ ENV \
 
 # Setup $TZ. Remember to run this again in your own build
     # Make sure that all files here have execute permissions
-RUN dpkg-reconfigure tzdata && \
-    chmod +x /etc/cont-init.d/*
-
+RUN dpkg-reconfigure tzdata 
 
 # Set default path to project folder for easier running commands in project
 WORKDIR ${PROJECT_ROOT}
