@@ -72,7 +72,7 @@ RUN \
     ##
     && curl -o /usr/local/bin/wp-cli -L https://github.com/wp-cli/wp-cli/releases/download/v2.6.0/wp-cli-2.6.0.phar  \
     && echo "d166528cab60bc8229c06729e7073838fbba68d6b2b574504cb0278835c87888 /usr/local/bin/wp-cli" | sha256sum -c \
-    && chmod +rx /usr/local/bin/wp-cli \
+    && chmod a+rx /usr/local/bin/wp-cli \
     # Symlink it to /usr/bin as well so that cron can find this script with limited PATH
     && ln -s /usr/local/bin/wp-cli /usr/bin/wp-cli \
     ##
@@ -81,7 +81,7 @@ RUN \
     ##
     && curl -o /usr/local/bin/cronlock -L https://raw.githubusercontent.com/kvz/cronlock/master/cronlock  \
     && echo "f7ffa617134e597be1b975541eb8300cdaf28c6c7e8f59d631df4f7c6d31ba74 /usr/local/bin/cronlock" | sha256sum -c \
-    && chmod +rx /usr/local/bin/cronlock \
+    && chmod a+rx /usr/local/bin/cronlock \
     # Symlink it to /usr/bin as well so that cron can find this script with limited PATH
     && ln -s /usr/local/bin/cronlock /usr/bin/cronlock
 
@@ -97,8 +97,7 @@ RUN \
 ##
 COPY rootfs/ /
 RUN chmod -R a+r /etc/cont-init.d /etc/nginx && chmod -R a+rx /etc/services.d
-RUN ls -la /etc/services.d/cron
-RUN ls -la /usr/bin
+
 # Run small fixes
 RUN set -x \
     && mkdir -p /var/www/uploads \
