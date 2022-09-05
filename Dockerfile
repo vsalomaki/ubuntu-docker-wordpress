@@ -105,7 +105,9 @@ RUN set -x \
     && mkdir -p /tmp/php-opcache \
     && ln -sf /usr/sbin/php-fpm7.4 /usr/sbin/php-fpm \
     && ln -sf /usr/bin/wp /usr/local/bin/wp \
-    && chmod a+rx /usr/local/bin/wp
+    && chmod a+rx /usr/local/bin/wp /usr/local/bin/phinx /usr/local/bin/print-smtp-password \
+    && chmod a+rx /usr/local/bin/print-smtp-password /usr/local/bin/wp-run-cron /usr/sbin/sendmail
+
     
 # This is for your project root
 ENV PROJECT_ROOT="/var/www/project"
