@@ -1,4 +1,4 @@
-FROM vsalomaki/ubuntu-docker-openresty-pagespeed:22.04.02
+FROM vsalomaki/ubuntu-docker-openresty-pagespeed:22.04.03
 
 LABEL maintainer="vsalomaki@gmail.com"
 #Forked from files by Ville Pietarinen / Geniem Oy
@@ -18,40 +18,40 @@ RUN echo "cachebust-2"
 RUN apt update && apt upgrade -y  
 
 RUN apt install -y software-properties-common \
-     && apt install -y --no-install-recommends \
-         apt-utils \
-         curl \
-         nano \
-         ca-certificates \
-         msmtp \
-         postfix \
-         less gettext
+    && apt install -y --no-install-recommends \
+    apt-utils \
+    curl \
+    nano \
+    ca-certificates \
+    msmtp \
+    postfix \
+    less gettext jq
 
 RUN add-apt-repository ppa:ondrej/php 
 RUN \
-        apt install -y \
-        #php7.4-dev \
-        php7.4-cli \
-        php7.4-common \
-        php7.4-apcu \
-        # php7.4-apcu-bc \
-        php7.4-curl \
-        php7.4-json \
-        php7.4-opcache \
-        php7.4-readline \
-        php7.4-xml \
-        php7.4-zip \
-        php7.4-fpm \
-        php7.4-redis \
-        php7.4-mongodb \
-        php7.4-mysqli \
-        php7.4-intl \
-        php7.4-gd \
-        php7.4-mbstring \
-        php7.4-soap \
-        php7.4-bcmath \
-        #php7.4-ldap \
-        php-pear \
+    apt install -y \
+    #php7.4-dev \
+    php7.4-cli \
+    php7.4-common \
+    php7.4-apcu \
+    # php7.4-apcu-bc \
+    php7.4-curl \
+    php7.4-json \
+    php7.4-opcache \
+    php7.4-readline \
+    php7.4-xml \
+    php7.4-zip \
+    php7.4-fpm \
+    php7.4-redis \
+    php7.4-mongodb \
+    php7.4-mysqli \
+    php7.4-intl \
+    php7.4-gd \
+    php7.4-mbstring \
+    php7.4-soap \
+    php7.4-bcmath \
+    #php7.4-ldap \
+    php-pear \
     #&& pecl install redis \
     # Force install only cron without extra mailing dependencies
     && cd /tmp \
@@ -108,7 +108,7 @@ RUN set -x \
     && chmod a+rx /usr/local/bin/wp /usr/local/bin/phinx /usr/local/bin/print-smtp-password \
     && chmod a+rx /usr/local/bin/print-smtp-password /usr/local/bin/wp-run-cron /usr/sbin/sendmail
 
-    
+
 # This is for your project root
 ENV PROJECT_ROOT="/var/www/project"
 COPY nginx ${PROJECT_ROOT}/nginx
@@ -186,10 +186,10 @@ ENV \
     UPLOADS_ROOT="/var/www/uploads" \
     # This can be overidden by you, it's just default for us
     TZ="Europe/Helsinki" 
-    #PROXY="127.0.0.1" 
+#PROXY="127.0.0.1" 
 
 # Setup $TZ. Remember to run this again in your own build
-    # Make sure that all files here have execute permissions
+# Make sure that all files here have execute permissions
 RUN dpkg-reconfigure tzdata 
 
 # Set default path to project folder for easier running commands in project
