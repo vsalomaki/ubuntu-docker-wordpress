@@ -1,4 +1,4 @@
-web74:
+web81:
   build: .
   ports:
     - 80
@@ -9,5 +9,5 @@ web74:
     WP_GID: 101
 
     # For testing with gdev
-    VIRTUAL_HOST: php70.test
+    VIRTUAL_HOST: php81.test
     PORT: 80

@@ -12,7 +12,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN echo "cachebust-2"
 
 ##
-# Install php7 packages from dotdeb.org
+# Install php8 packages from dotdeb.org
 # - Dotdeb is an extra repository providing up-to-date packages for your Debian servers
 ## 
 RUN apt update && apt upgrade -y  
@@ -27,7 +27,7 @@ RUN apt install -y software-properties-common \
     postfix \
     less gettext jq
 
-RUN add-apt-repository ppa:ondrej/php 
+RUN add-apt-repository ppa:ondrej/php && apt update
 RUN \
     apt install -y \
     #php8.1-dev \
@@ -100,9 +100,10 @@ RUN chmod -R a+r /etc/cont-init.d /etc/nginx && chmod -R a+rx /etc/services.d &&
 # Run small fixes
 RUN set -x \
     && mkdir -p /var/www/uploads \
+    && mkdir -p /var/www/project/web \
     && mkdir -p /dev/cache \
     && mkdir -p /tmp/php-opcache \
-    && ln -sf /usr/sbin/php-fpm7.4 /usr/sbin/php-fpm \
+    && ln -sf /usr/sbin/php-fpm8.1 /usr/sbin/php-fpm \
     && ln -sf /usr/bin/wp /usr/local/bin/wp \
     && chmod a+rx /usr/local/bin/wp /usr/local/bin/phinx /usr/local/bin/print-smtp-password \
     && chmod a+rx /usr/local/bin/print-smtp-password /usr/local/bin/wp-run-cron /usr/sbin/sendmail
