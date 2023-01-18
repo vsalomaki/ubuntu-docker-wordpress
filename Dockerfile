@@ -144,6 +144,7 @@ ENV \
     NGINX_CACHE_USE_STALE="error timeout invalid_header updating http_500 http_503 http_403 http_404 http_429" \
     # Default headers for fastcgi stale- and error cache
     NGINX_CACHE_CONTROL='"max-age=60, stale-while-revalidate=300, stale-if-error=21600"'\
+    NGINX_CACHE_CONTROL_NOCACHE='"no-store"' \
     # Cronlock is used to stop simultaneous cronjobs in clusterised environments
     CRONLOCK_HOST="" \
     # This is used by nginx and php-fpm
