@@ -145,6 +145,8 @@ ENV \
     # Default headers for fastcgi stale- and error cache
     NGINX_CACHE_CONTROL='"max-age=60, stale-while-revalidate=300, stale-if-error=21600"'\
     NGINX_CACHE_CONTROL_NOCACHE='"no-cache, no-store, must-revalidate"' \
+    NGINX_CACHE_SKIP_ON_COOKIES='"comment_author|wordpress_[a-f0-9]+|wp-postpass|wordpress_no_cache|wordpress_logged_in|woocommerce_items_in_cart"' \
+    NGINX_CACHE_SKIP_ON_URLS='"/wp-admin/|/xmlrpc.php|wp-.*.php"' \
     # Cronlock is used to stop simultaneous cronjobs in clusterised environments
     CRONLOCK_HOST="" \
     # This is used by nginx and php-fpm
