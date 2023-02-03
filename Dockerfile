@@ -49,6 +49,7 @@ RUN \
     php8.1-mbstring \
     php8.1-soap \
     php8.1-bcmath \
+    php8.1-igbinary \
     #php8.1-ldap \
     php-pear \
     #&& pecl install redis \
