@@ -9,7 +9,7 @@ LABEL maintainer="vsalomaki@gmail.com"
 ARG LANG=C.UTF-8
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN echo "cachebust-2"
+RUN echo "cachebust-3"
 
 ##
 # Install php8 packages from dotdeb.org
