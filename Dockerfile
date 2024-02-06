@@ -1,4 +1,4 @@
-FROM vsalomaki/ubuntu-docker-openresty-pagespeed:22.04.03
+FROM vsalomaki/ubuntu-docker-openresty-pagespeed:22.04.04
 
 LABEL maintainer="vsalomaki@gmail.com"
 #Forked from files by Ville Pietarinen / Geniem Oy
@@ -30,29 +30,25 @@ RUN apt install -y software-properties-common \
 RUN add-apt-repository ppa:ondrej/php && apt update
 RUN \
     apt install -y \
-    #php8.1-dev \
-    php8.1-cli \
-    php8.1-common \
-    php8.1-apcu \
-    # php8.1-apcu-bc \
-    php8.1-curl \
-    php8.1-opcache \
-    php8.1-readline \
-    php8.1-xml \
-    php8.1-zip \
-    php8.1-fpm \
-    php8.1-redis \
-    php8.1-mongodb \
-    php8.1-mysqli \
-    php8.1-intl \
-    php8.1-gd \
-    php8.1-mbstring \
-    php8.1-soap \
-    php8.1-bcmath \
-    php8.1-igbinary \
-    #php8.1-ldap \
+    php8.2-cli \
+    php8.2-common \
+    php8.2-apcu \
+    php8.2-curl \
+    php8.2-opcache \
+    php8.2-readline \
+    php8.2-xml \
+    php8.2-zip \
+    php8.2-fpm \
+    php8.2-redis \
+    php8.2-mongodb \
+    php8.2-mysqli \
+    php8.2-intl \
+    php8.2-gd \
+    php8.2-mbstring \
+    php8.2-soap \
+    php8.2-bcmath \
+    php8.2-igbinary \
     php-pear \
-    #&& pecl install redis \
     # Force install only cron without extra mailing dependencies
     && cd /tmp \
     && apt download cron \
@@ -70,8 +66,8 @@ RUN \
     # Install wp-cli
     # source: http://wp-cli.org/
     ##
-    && curl -o /usr/local/bin/wp-cli -L https://github.com/wp-cli/wp-cli/releases/download/v2.7.1/wp-cli-2.7.1.phar  \
-    && echo "bbf096bccc6b1f3f1437e75e3254f0dcda879e924bbea403dff3cfb251d4e468 /usr/local/bin/wp-cli" | sha256sum -c \
+    && curl -o /usr/local/bin/wp-cli -L https://github.com/wp-cli/wp-cli/releases/download/v2.9.0/wp-cli-2.9.0.phar  \
+    && echo "af6b7ccc21ed0907cb504db5a059f0e120117905a6017bfdd4375cee3c93d864 /usr/local/bin/wp-cli" | sha256sum -c \
     # Symlink it to /usr/bin as well so that cron can find this script with limited PATH
     && ln -s /usr/local/bin/wp-cli /usr/bin/wp-cli \
     && chmod a+rx /usr/local/bin/wp-cli \
@@ -104,7 +100,7 @@ RUN set -x \
     && mkdir -p /var/www/project/web \
     && mkdir -p /dev/cache \
     && mkdir -p /tmp/php-opcache \
-    && ln -sf /usr/sbin/php-fpm8.1 /usr/sbin/php-fpm \
+    && ln -sf /usr/sbin/php-fpm8.2 /usr/sbin/php-fpm \
     && ln -sf /usr/bin/wp /usr/local/bin/wp \
     && chmod a+rx /usr/local/bin/wp /usr/local/bin/phinx /usr/local/bin/print-smtp-password \
     && chmod a+rx /usr/local/bin/print-smtp-password /usr/local/bin/wp-run-cron /usr/sbin/sendmail
@@ -190,7 +186,6 @@ ENV \
     UPLOADS_ROOT="/var/www/uploads" \
     # This can be overidden by you, it's just default for us
     TZ="Europe/Helsinki" 
-#PROXY="127.0.0.1" 
 
 # Setup $TZ. Remember to run this again in your own build
 # Make sure that all files here have execute permissions

@@ -189,7 +189,7 @@ CACHE_MODE=
 
 ### For running WordPress
 
-- php8.1
+- php8.2
 - php-fpm7
 - nginx
 - wp-cli
