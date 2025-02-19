@@ -66,8 +66,8 @@ RUN \
     # Install wp-cli
     # source: http://wp-cli.org/
     ##
-    && curl -o /usr/local/bin/wp-cli -L https://github.com/wp-cli/wp-cli/releases/download/v2.9.0/wp-cli-2.9.0.phar  \
-    && echo "af6b7ccc21ed0907cb504db5a059f0e120117905a6017bfdd4375cee3c93d864 /usr/local/bin/wp-cli" | sha256sum -c \
+    && curl -o /usr/local/bin/wp-cli -L https://github.com/wp-cli/wp-cli/releases/download/v2.11.0/wp-cli-2.11.0.phar  \
+    && echo "a39021ac809530ea607580dbf93afbc46ba02f86b6cffd03de4b126ca53079f6 /usr/local/bin/wp-cli" | sha256sum -c \
     # Symlink it to /usr/bin as well so that cron can find this script with limited PATH
     && ln -s /usr/local/bin/wp-cli /usr/bin/wp-cli \
     && chmod a+rx /usr/local/bin/wp-cli \
