@@ -25,7 +25,11 @@ RUN apt install -y software-properties-common \
     ca-certificates \
     msmtp \
     postfix \
-    less gettext jq
+    less gettext jq 
+
+RUN curl -sL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt update && apt upgrade -y \
+    && apt install -y nodejs && npm install -g yarn 
 
 RUN add-apt-repository ppa:ondrej/php && apt update
 RUN \
