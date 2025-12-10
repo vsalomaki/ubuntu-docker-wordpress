@@ -9,29 +9,25 @@ LABEL maintainer="vsalomaki@gmail.com"
 ARG LANG=C.UTF-8
 ARG DEBIAN_FRONTEND=noninteractive
 
-##
-# Install php8 packages from dotdeb.org
-# - Dotdeb is an extra repository providing up-to-date packages for your Debian servers
-## 
-RUN apt update && apt upgrade -y  
+RUN apt-get update && apt-get upgrade -y  
 
-RUN apt install -y software-properties-common \
-    && apt install -y --no-install-recommends \
+RUN apt-get install -y software-properties-common \
+    && apt-get install -y --no-install-recommends \
     apt-utils \
     curl \
     nano \
     ca-certificates \
     msmtp \
     postfix \
-    less gettext jq 
+    less gettext jq cron
 
 RUN curl -sL https://deb.nodesource.com/setup_22.x | bash - \
-    && apt update && apt upgrade -y \
-    && apt install -y nodejs && npm install -g yarn 
+    && apt-get update && apt-get upgrade -y \
+    && apt-get install -y nodejs && npm install -g yarn 
 
-RUN add-apt-repository ppa:ondrej/php && apt update
+RUN add-apt-repository ppa:ondrej/php && apt-get update
 RUN \
-    apt install -y \
+    apt-get install -y \
     php8.2-cli \
     php8.2-common \
     php8.2-apcu \
@@ -46,16 +42,12 @@ RUN \
     php8.2-mysqli \
     php8.2-intl \
     php8.2-gd \
+    php8.2-imagick \
     php8.2-mbstring \
     php8.2-soap \
     php8.2-bcmath \
     php8.2-igbinary \
-    php-pear \
-    # Force install only cron without extra mailing dependencies
-    && cd /tmp \
-    && apt download cron \
-    && dpkg --force-all -i cron*.deb \
-    && mkdir -p /var/spool/cron/crontabs 
+    php-pear 
 
 
 # Install helpers
@@ -85,8 +77,8 @@ RUN \
 
 # Cleanup
 RUN \
-    apt clean \
-    && apt autoremove \
+    apt-get clean \
+    && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* /var/log/apt/* /var/log/*.log
 
 ##
