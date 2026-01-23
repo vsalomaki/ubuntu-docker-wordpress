@@ -26,10 +26,13 @@ function render_env_tmpl() {
 
 echo "[cont-init.d] Substituting env into configuration files..."
 
+# Use NGINX_ENV in template selection if set, otherwise use WP_ENV
+export NGINX_ENV="${NGINX_ENV:-$WP_ENV}" 
+
 ##
 # Nginx doesn't support env variables in config files so we will have to do this in hacky way instead
 ##
-VARS='$PORT:$WEB_ROOT:$WEB_USER:$WEB_GROUP:$NGINX_ACCESS_LOG:$NGINX_ERROR_LOG:$NGINX_ERROR_LEVEL:$NGINX_INCLUDE_DIR:$NGINX_MAX_BODY_SIZE:$NGINX_BODY_BUFFER_SIZE:$NGINX_FASTCGI_TIMEOUT:$WP_ENV:$NGINX_CACHE_KEY'
+VARS='$PORT:$WEB_ROOT:$WEB_USER:$WEB_GROUP:$NGINX_ACCESS_LOG:$NGINX_ERROR_LOG:$NGINX_ERROR_LEVEL:$NGINX_INCLUDE_DIR:$NGINX_MAX_BODY_SIZE:$NGINX_BODY_BUFFER_SIZE:$NGINX_FASTCGI_TIMEOUT:$WP_ENV:$NGINX_ENV:$NGINX_CACHE_KEY'
 VARS+='$SERVER_NAME'
 render_env_tmpl "$VARS" /etc/nginx/nginx.conf
 
@@ -96,5 +99,5 @@ then
 else
     BASIC_AUTH_PASSWORD_HASH=$(openssl passwd -crypt $BASIC_AUTH_PASSWORD)
     echo "Encrypting BASIC_AUTH_PASSWORD... ${BASIC_AUTH_PASSWORD} -> ${BASIC_AUTH_PASSWORD_HASH}"
-    echo "${BASIC_AUTH_USER}:${BASIC_AUTH_PASSWORD_HASH}" > /var/www/project/nginx/environments/${WP_ENV}/server/.htpasswd
+    echo "${BASIC_AUTH_USER}:${BASIC_AUTH_PASSWORD_HASH}" > /var/www/project/nginx/environments/${NGINX_ENV}/server/.htpasswd
 fi
