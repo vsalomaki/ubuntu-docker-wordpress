@@ -21,7 +21,7 @@ RUN apt-get install -y software-properties-common \
     postfix \
     less gettext jq cron
 
-RUN curl -sL https://deb.nodesource.com/setup_22.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_24.x | bash - \
     && apt-get update && apt-get upgrade -y \
     && apt-get install -y nodejs && npm install -g yarn 
 
